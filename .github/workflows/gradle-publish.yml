@@ -50,8 +50,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download Signed APK
-        run: |
-          cp app/build/outputs/apk/release/*.apk MyApp.apk
+        uses: actions/download-artifact@v3
+        with:
+          name: 'MyApp.apk'
 
       - name: Create Release
         id: create_release
@@ -62,7 +63,7 @@ jobs:
           generateReleaseNotes: true
 
       - name: Upload Release Asset
-        uses: ncipollo/release-action@v1
+        uses: actions/upload-artifact@v4
         with:
-          artifacts: MyApp.apk
-          token: ${{ secrets.GITHUB_TOKEN }}
+          name: 'MyApp.apk'
+          path: 'MyApp.apk'
